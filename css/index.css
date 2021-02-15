@@ -1,0 +1,149 @@
+.container {
+  position: relative;
+  margin: 0 auto;
+  width: 700px;
+}
+audio {
+  margin-left: 9px;
+  width: 677px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .container {
+    width: 556px;
+  }
+  audio {
+  margin-left: 9px;
+  width: 550px;
+}
+}
+
+@media only screen and (max-width: 767px) {
+  .container {
+    width: 300px;
+  }
+  audio {
+  margin-left: 9px;
+  width: 295px;
+}
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .container {
+    width: 420px;
+  }
+  audio {
+  margin-left: 9px;
+  width: 415px;
+}
+}
+
+html,
+body,
+div,
+h1,
+h6,
+p,
+a,
+ul,
+li,
+audio {
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+}
+ul {
+  list-style: none;
+}
+
+html,
+body {
+  color: #5a5a5a;
+  font: 16px/18px "Yanone Kaffeesatz", HelveticaNeue, "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+  font-weight: 20;
+  padding: 5px 0;
+}
+
+h1,
+h6,
+p {
+  color: #808080;
+  font-weight: 200;
+}
+h1 {
+  font-size: 42px;
+  line-height: 44px;
+  margin: 20px 0 0;
+}
+h6 {
+  font-size: 18px;
+  line-height: 20px;
+  margin: 4px 0 20px;
+}
+p {
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0 0 2px;
+}
+
+::selection {
+  background-color: #262223;
+  color: #444;
+}
+
+#daftarMusik {
+  margin: 0;
+}
+#daftarMusik li {
+  background-color: #231f20;
+  cursor: pointer;
+  display: block;
+  margin: 0;
+  padding: 21px 0;
+}
+#daftarMusik li:hover {
+  background-color: #262223;
+}
+.isiDaftarMusik {
+  position: relative;
+}
+.judulDaftarMusik {
+  left: 50px;
+  overflow: hidden;
+  position: absolute;
+  right: 65px;
+  text-overflow: ellipsis;
+  top: 0;
+  white-space: nowrap;
+}
+.noDaftarMusik {
+  padding-left: 21px;
+  width: 25px;
+}
+.plSel,
+.plSel:hover {
+  background-color: #262223 !important;
+  cursor: default !important;
+}
+
+#tempatAudio {
+  background-color: #fafafa;
+}
+#daftarMusik li {
+  background-color: #fafafa;
+}
+#daftarMusik li:hover {
+  background-color: #eee;
+}
+.plSel,
+.plSel:hover {
+  background-color: #eee !important;
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Pemutar Musik Html 5</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="./css/styles.css" rel="stylesheet" />
+  <link href=" css/index.css" rel="stylesheet" type="text/css" />
+
+  <script src="js/prefixfree.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-12 text-center">
+        <h1>Pemutar Musik</h1>
+        <h6>mn-belajarweb.blogspot.com</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div style="float: left;" id="statusPemutar">Paused : </div>
+        <div style="float: left; padding-left: 4px;" id="judulPutar"></div>
+      </div>
+      <div>
+        <div id="tempatAudio" class="row">
+          <div class="col-12 mb-2">
+            <audio preload id="pemutar" controls="controls">
+              Browser anda tidak support audio HTML5 :(
+            </audio>
+          </div>
+          <div class="col-6">
+            <a id="tombolPrev" class="btn btn-info">Prev</a>
+            <a id="tombolNext" class="btn btn-info">Next</a>
+          </div>
+          <div class="col-6 mb-2">
+            <input class="btn btn-info" style="width: 80%;" type="file" id="pemilihMusik" accept=".mp3, .ogg"
+              multiple />
+          </div>
+        </div>
+        <ul id="daftarMusik"></ul>
+      </div>
+    </div>
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/html5media.min.js"></script>
+
+  <script>
+    var apakahMendukung = !!document.createElement("audio").canPlayType;
+    if (apakahMendukung) {
+      var indeks = 0,
+        memutar = false,
+        lokasi = "fileMusik/";
+
+      var daftarMusik = [];
+      if (localStorage.getItem("dataMusik")) {
+        daftarMusik = localStorage.getItem("dataMusik").split("=+=");
+      }
+      var jumlahMusik = daftarMusik.length;
+
+      var statusPemutar = $("#statusPemutar"),
+        judulPutar = $("#judulPutar"),
+        audio = $("#pemutar")
+          .bind("play", function () {
+            memutar = true;
+            statusPemutar.html("Now Playing : ");
+          })
+          .bind("pause", function () {
+            memutar = false;
+            statusPemutar.html("Paused : ");
+          })
+          .bind("ended", function () {
+            statusPemutar.html("Paused : ");
+            if (indeks + 1 < jumlahMusik) {
+              indeks++;
+              siapkanMusik(indeks);
+              audio.play();
+            } else {
+              audio.pause();
+              indeks = 0;
+              siapkanMusik(indeks);
+            }
+          })
+          .get(0),
+
+        tombolPrev = $("#tombolPrev").click(function () {
+          if (indeks - 1 > -1) {
+            indeks--;
+            siapkanMusik(indeks);
+            if (memutar) {
+              audio.play();
+            }
+          } else {
+            audio.pause();
+            indeks = 0;
+            siapkanMusik(indeks);
+          }
+        }),
+
+        tombolNext = $("#tombolNext").click(function () {
+          if (indeks + 1 < jumlahMusik) {
+            indeks++;
+            siapkanMusik(indeks);
+            if (memutar) {
+              audio.play();
+            }
+          } else {
+            audio.pause();
+            indeks = 0;
+            siapkanMusik(indeks);
+          }
+        }),
+
+        siapkanMusik = function (id) {
+          $(".plSel").removeClass("plSel");
+          $("#daftarMusik li:eq(" + id + ")").addClass("plSel");
+          judulPutar.text(" " + daftarMusik[id]);
+          indeks = id;
+          audio.src = lokasi + daftarMusik[id];
+        },
+
+        mainkanMusik = function (id) {
+          siapkanMusik(id);
+          audio.play();
+        };
+
+      var pilihMusik = $("#pemilihMusik").change(function () {
+        console.log(dataBaru)
+        var dataBaru = "";
+        var data = $("#pemilihMusik").get(0).files;
+        for (let i = 0; i < data.length; i++) {
+          if (i == 0) {
+            dataBaru = data[i].name;
+          } else {
+            dataBaru += "=+=" + data[i].name;
+          }
+        }
+        localStorage.setItem("dataMusik", dataBaru);
+        indeks = 0;
+        susunMusik();
+        siapkanMusik(indeks);
+      })
+
+      var susunMusik = function () {
+        $("#daftarMusik").html("");
+        if (localStorage.getItem("dataMusik")) {
+          daftarMusik = localStorage.getItem("dataMusik").split("=+=");
+        }
+        jumlahMusik = daftarMusik.length;
+        for (let i = 0; i < daftarMusik.length; i++) {
+          $("#daftarMusik").append(
+            '<li><div class="isiDaftarMusik"><div class="noDaftarMusik">' +
+            (i + 1) +
+            '.</div><div class="judulDaftarMusik">' +
+            daftarMusik[i] +
+            "</div></li>"
+          );
+        }
+
+        var li = $("#daftarMusik li").click(function () {
+          var id = parseInt($(this).index());
+          if (id !== indeks) {
+            mainkanMusik(id);
+          }
+        })
+      }
+      susunMusik();
+      siapkanMusik(indeks);
+    }
+
+  </script>
+</body>
+
+</html>
